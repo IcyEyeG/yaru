@@ -213,7 +213,7 @@ GtkTextView { // This will get overridden by .view, needed by gedit line numbers
   background-image: none;
   background-color: blue;
   opacity: 0; // non spinning spinner makes no sense
-  color: $blue;
+  color: $neutral_color;
   -gtk-icon-source: -gtk-icontheme('process-working-symbolic');
   &:active {
     opacity: 1;
@@ -223,7 +223,7 @@ GtkTextView { // This will get overridden by .view, needed by gedit line numbers
     }
   }
 
-  &:backdrop { color: _backdrop_color($blue); }
+  &:backdrop { color: _backdrop_color($neutral_color); }
 }
 
 /****************
@@ -1132,7 +1132,7 @@ GtkComboBox {
   padding: 0 6px;
   //min-height: 40px;
   border-color: transparentize(_border_color($headerbar_bg_color), 0.7);
-  border-top-color: $inkstone;
+  border-top-color: $headerbar_bg_color;
   border-style: solid;
   border-width: 1px 1px 0 1px;
   border-radius: 7px 7px 0 0;
@@ -1170,11 +1170,11 @@ GtkComboBox {
   & > GtkBox > .separator.vertical {
     -GtkWidget-wide-separators: true;
     -GtkWidget-separator-width: 1px;
-    background-color: mix($inkstone, $headerbar_bg_color, 50%);
+    background-color: mix($headerbar_fg_color, $headerbar_bg_color, 50%);
     background-image: none;
 
     &:backdrop {
-      background-color: mix(darken($inkstone, 5%), $backdrop_headerbar_bg_color, 50%);
+      background-color: mix($backdrop_headerbar_fg_color, $backdrop_headerbar_bg_color, 50%);
       background-image: none;
     }
   }
@@ -1392,7 +1392,7 @@ GtkComboBox {
       // force linked buttons and entries to be separate
       // this needs a lot of testing
       &:focus {
-        & + entry { border-left-color: _border_color($graphite); }
+        & + entry { border-left-color: _border_color($borders_color); }
         & + button { border-left-color: transparent; }
 
         & + entry,
@@ -1447,14 +1447,14 @@ GtkComboBox {
     buttonbox.linked .button,
     buttonbox.linked .button.text-button ~ .button {
       border-style: solid;
-      border-color: $inkstone;
+      border-color: $base_color;
 
       &:not(:only-child) { border-width: 1px 0; }
       &:first-child { border-width: 1px 0 1px 1px; }
       &:last-child { border-width: 1px 1px 1px 0; }
 
       &:backdrop {
-        &, &:checked { border-color: lighten($inkstone, 3%); }
+        &, &:checked { border-color: lighten($base_color, 3%); }
       }
     }
 
@@ -1852,8 +1852,8 @@ column-header.button.dnd { // for treeview-like derive widgets
   // Through me you go a pass among lost souls.
   // ...
   // Abandon all hope — Ye Who Enter Here
-  $_borders_color: if($light, transparentize($borders_color, 0.2), darken($slate, 8%));
-  //background-color: if($light, $porcelain, $headerbar_bg_color);
+  $_borders_color: transparentize($borders_color, 0.2);
+  //background-color: $headerbar_bg_color;
   background-color: $base_color;
   border-color: $_borders_color;
   border-width: 1px;
@@ -1883,7 +1883,7 @@ column-header.button.dnd { // for treeview-like derive widgets
     // FIXME: double borders in some case, can't fix it w/o a class tho
     // FIXME: doesn't work on dark var
     //background-color: mix($bg_color, $borders_color, 70%);
-    background-color: if($light, $porcelain, $headerbar_bg_color);
+     background-color: $bg_color;
 
     // this is the shading of the header behind the tabs
     &.frame {
@@ -2491,12 +2491,12 @@ GtkCheckButton.text-button, GtkRadioButton.text-button {
       border-radius: 50%;  // overridden
       border-color: darken($backdrop_borders_color,3%);
       background-image: none;
-      background-color: mix($white, $backdrop_bg_color, 70%);
+      background-color: mix(white, $backdrop_bg_color, 70%);
       box-shadow: none;
     }
     &:backdrop:insensitive {
       @include button(backdrop-insensitive);
-      background-color: mix($white, $backdrop_insensitive_color, 70%);
+      background-color: mix(white, $backdrop_insensitive_color, 70%);
       border-color: $backdrop_insensitive_color;
     }
     &:active {

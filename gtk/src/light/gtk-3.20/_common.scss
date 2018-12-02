@@ -256,7 +256,7 @@ assistant {
 spinner {
   background: none;
   opacity: 0; // non spinning spinner makes no sense
-  color: $blue;
+  color: $neutral_color;
   -gtk-icon-source: -gtk-icontheme('process-working-symbolic');
 
   &:checked {
@@ -266,7 +266,7 @@ spinner {
     &:disabled { opacity: 0.5; }
   }
 
-  &:backdrop { color: _backdrop_color($blue); }
+  &:backdrop { color: _backdrop_color($neutral_color); }
 }
 
 
@@ -474,9 +474,14 @@ treeview entry {
     margin-right: 8px;
   }
   border-color: transparent;
-  background-color: $slate;
-  color: darken($silk, 3%);
-  &.button:hover { color: white; }
+
+  $_entry_tag_bg: if($variant=='light', $selected_bg_color, mix($fg_color, $base_color, 50%));
+  background-color: $_entry_tag_bg;
+
+  $_entry_tag_color: if($variant=='light', $selected_fg_color, $base_color);
+  color: $_entry_tag_color;
+
+  &.button:hover { color: $_entry_tag_color; }
 }
 
 /***********
@@ -1545,7 +1550,7 @@ headerbar {
   padding: 0 6px;
   min-height: 40px;
   border-color: transparentize(_border_color($headerbar_bg_color), 0.7);
-  border-top-color: $inkstone;
+  border-top-color: $headerbar_bg_color;
   border-style: solid;
   border-width: 1px 1px 0 1px;
   border-radius: 0;
@@ -1581,15 +1586,15 @@ headerbar {
   }
 
   & > separator {
-      background-image: image(mix($inkstone, $headerbar_bg_color, 50%));
-      &:backdrop { background-image: image(mix(darken($inkstone, 5%), $backdrop_headerbar_bg_color, 50%)); }
+      background-image: image(mix($headerbar_fg_color, $headerbar_bg_color, 50%));
+      &:backdrop { background-image: image(mix($backdrop_headerbar_fg_color, $backdrop_headerbar_bg_color, 50%)); }
   }
 
   ~ separator, separator {
     &, &.titlebutton {
      &.horizontal, &.vertical {
-        & { background-image: image(mix($inkstone, $headerbar_bg_color, 50%)); }
-        &:backdrop { background-image: image(mix(darken($inkstone, 5%), $backdrop_headerbar_bg_color, 50%)); }
+        & { background-image: image(mix($headerbar_fg_color, $headerbar_bg_color, 50%)); }
+        &:backdrop { background-image: image(mix($backdrop_headerbar_fg_color, $backdrop_headerbar_bg_color, 50%)); }
       }
     }
   }
@@ -1687,7 +1692,7 @@ headerbar {
       // force linked buttons and entries to be separate
       // this needs a lot of testing
       &:focus {
-        & + entry { border-left-color: _border_color($graphite); }
+        & + entry { border-left-color: _border_color($borders_color); }
         & + button { border-left-color: transparent; }
 
         & + entry,
@@ -1743,14 +1748,14 @@ headerbar {
     buttonbox.linked button,
     buttonbox.linked button.text-button ~ button {
       border-style: solid;
-      border-color: lighten($inkstone, 5%);
+      border-color: lighten($base_color, 5%);
 
       &:not(:only-child) { border-width: 1px 0; }
       &:first-child { border-width: 1px 0 1px 1px; }
       &:last-child { border-width: 1px 1px 1px 0; }
 
       &:backdrop {
-        &, &:checked { border-color: lighten($inkstone, 3%); }
+        &, &:checked { border-color: lighten($base_color, 3%); }
       }
     }
 
@@ -2417,14 +2422,14 @@ popover.background {
  *************/
 notebook {
   > header {
-    $_borders_color: if($light, transparentize($borders_color, 0.2), darken($slate, 8%));
-    background: if($light, $porcelain, $headerbar_bg_color);
+    $_borders_color: transparentize($borders_color, 0.2);
+    background: $bg_color;
     border-color: $_borders_color;
     border-width: 1px;
     padding: 1px;
 
     &:backdrop {
-      background-color: if($light, $backdrop_bg_color, $backdrop_headerbar_bg_color);
+      background-color: $backdrop_bg_color;
       border-color: $backdrop_borders_color;
     }
 
@@ -3162,8 +3167,8 @@ scale {
 
     &:backdrop {
       transition: $backdrop_transition;
-      background-color: mix($white, $backdrop_bg_color, 70%);
-      &:disabled { background-color: mix($white, $backdrop_insensitive_color, 70%); border-color: $backdrop_insensitive_color; }
+      background-color: mix(white, $backdrop_bg_color, 70%);
+      &:disabled { background-color: mix(white, $backdrop_insensitive_color, 70%); border-color: $backdrop_insensitive_color; }
     }
 
     // ...on selected list rows
@@ -4226,7 +4231,7 @@ tooltip {
   &.background {
     // background-color needs to be set this way otherwise it gets drawn twice
     // see https://bugzilla.gnome.org/show_bug.cgi?id=736155 for details.
-    background-color: transparentize($jet, 0.1);
+    background-color: transparentize($osd_button_bg_color, 0.1);
     background-clip: padding-box;
     border: 1px solid $osd_borders_color;     // this suble border is meant to
                                               // not make the tooltip melt with
@@ -4244,7 +4249,7 @@ tooltip {
     min-height: 32px - (6px - 1px) * 2; // tooltip has hard-coded 6px padding
     padding: 0 8px - (6px - 1px);       // and does not consider border-width
     background-color: transparent;
-    color: $porcelain;
+    color: $osd_fg_color;
   }
 }
 

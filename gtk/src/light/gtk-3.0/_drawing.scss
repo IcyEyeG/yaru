@@ -353,7 +353,7 @@
         $_bg: $bg_color;
     } @else if $c == $headerbar_bg_color {
         $_bg: $c;
-    } @else if $c == $red or $green or $yellow or $blue or $purple {
+    } @else if $c == $error_color or $success_color or $warning_color or $neutral_color or $purple {
         $_bg: transparentize($c, .1);
     }
       @else {
@@ -376,7 +376,7 @@
       $_label_color: none;
 
       @if $c == $success_color {
-        $_label_color: $porcelain;
+        $_label_color: $base_color;
         $_label_alpha: 0.45;
       } @else if $tc == $fg_color {
         $_label_color: $insensitive_fg_color;
@@ -501,7 +501,7 @@
         text-shadow: none;
         icon-shadow: none;
     }
-    @else if $c == $red or $green or $yellow or $blue or $purple {
+    @else if $c == $error_color or $success_color or $warning_color or $neutral_color or $purple {
         $_bg: transparentize($c, .1);
     }
     @else {
@@ -709,7 +709,7 @@
 
   $_insensitive_border_color: null;
   @if $bg == $dark_fill {
-    $_insensitive_border_color: if($variant=='light', $borders_edge, lighten($inkstone, 5%));
+    $_insensitive_border_color: if($variant=='light', $borders_edge, lighten($borders_edge, 10%));
   } @else {
     $_insensitive_border_color: $borders_edge;
   }
@@ -744,7 +744,7 @@
       color: transparent;
       border-color: $_insensitive_border_color;
       background-image: none;
-      background-color: if($bg==$dark_fill, transparent, $ash);
+      background-color: if($bg==$dark_fill, transparent, $dark_fill);
       box-shadow: none;
       text-shadow: none;
       &:active {
@@ -786,14 +786,14 @@
         box-shadow: none;
         &:insensitive {
           $_bg: transparentize($dark_fill, if($variant=='light', 0.7, 0.9));
-          background-color: if($bg==$dark_fill, $_bg, _backdrop_color($ash));;
+          background-color: if($bg==$dark_fill, $_bg, _backdrop_color($dark_fill));;
         }
       }
       &:insensitive {
         color: transparent;
         border-color: if($bg==$dark_fill, $_insensitive_border_color, transparent);
         background-image: none;
-        background-color: if($bg==$dark_fill, transparent, _backdrop_color($ash));
+        background-color: if($bg==$dark_fill, transparent, _backdrop_color($dark_fill));
         box-shadow: none;
       }
     }
@@ -813,8 +813,8 @@
       box-shadow: 0 1px 1px darken($alt, 7%);
     }
     &:insensitive {
-      background-color: if($bg==$dark_fill, transparent, $ash);
-      border: 1px solid if($bg==$dark_fill, $_insensitive_border_color, $slate);;
+      background-color: if($bg==$dark_fill, transparent, $dark_fill);
+      border: 1px solid if($bg==$dark_fill, $_insensitive_border_color, $dark_fill);;
       box-shadow: none;
     }
     &:backdrop {
@@ -832,7 +832,7 @@
         border-color: transparent;
       }
       &:insensitive {
-        background-color: if($bg==$dark_fill, transparent, _backdrop_color($ash));
+        background-color: if($bg==$dark_fill, transparent, _backdrop_color($dark_fill));
         transition: $backdrop_transition;
       }
     }

@@ -349,7 +349,7 @@
       $_label_color: none;
 
       @if $c == $success_color {
-        $_label_color: $porcelain;
+        $_label_color: $base_color;
         $_label_alpha: 0.45;
       } @else if $tc == $fg_color {
         $_label_color: $insensitive_fg_color;
@@ -589,7 +589,7 @@
   $_checked: $c == $success_color;
   $_border_color: if($_checked, $c, if($variant == 'light', $borders_color, white));
   $_dim_border_color: transparentize($_border_color, if($variant == 'light', 0.3, 0.7));
-  $_dim_background: if($variant == 'light', $dark_fill, $slate);
+  $_dim_background: $dark_fill;
 
   @if $t==normal  {
     background-color: if($_checked, $c, if($variant == 'light', $c, transparent));
@@ -654,7 +654,7 @@
 
   $_insensitive_border_color: null;
   @if $bg == $dark_fill {
-    $_insensitive_border_color: if($variant=='light', $borders_edge, lighten($inkstone, 5%));
+    $_insensitive_border_color: if($variant=='light', $borders_edge, lighten($borders_edge, 10%));
   } @else {
     $_insensitive_border_color: $borders_edge;
   }
@@ -681,7 +681,7 @@
   }
 
   &:disabled {
-    background-color: if($bg==$dark_fill, transparent, $ash);
+    background-color: if($bg==$dark_fill, transparent, $dark_fill);
     border: 1px solid $_insensitive_border_color;
     box-shadow: none;
 
@@ -717,12 +717,12 @@
 
       &:disabled {
         $_bg: transparentize($dark_fill, if($variant == 'light', 0.7, 0.9));
-        background-color: if($bg == $dark_fill, $_bg, _backdrop_color($ash));;
+        background-color: if($bg == $dark_fill, $_bg, _backdrop_color($dark_fill));;
       }
     }
 
     &:disabled {
-      background-color: if($bg == $dark_fill, transparent, _backdrop_color($ash));
+      background-color: if($bg == $dark_fill, transparent, _backdrop_color($dark_fill));
       border: 1px solid if($bg == $dark_fill, $_insensitive_border_color, transparent);
       box-shadow: none;
     }
@@ -748,8 +748,8 @@
   }
 
   &:disabled slider {
-    background-color: if($bg == $dark_fill, transparent, $ash);
-    border: 1px solid if($bg == $dark_fill, $_insensitive_border_color, $slate);;
+    background-color: if($bg == $dark_fill, transparent, $scrollbar_bg_color);
+    border: 1px solid if($bg == $dark_fill, $_insensitive_border_color, $scrollbar_bg_color);
     box-shadow: none;
   }
 
@@ -763,7 +763,7 @@
   }
 
   &:backdrop:disabled slider {
-    background-color: if($bg == $dark_fill, transparent, _backdrop_color($ash));
+    background-color: if($bg == $dark_fill, transparent, _backdrop_color($dark_fill));
     transition: $backdrop_transition;
   }
 }
@@ -885,10 +885,10 @@
   border: none;
 
   // Replace dashed line with light shadow
-  $us_shadow_color: $silk;
+  $us_shadow_color: $dark_fill;
   $us_shadow_alpha: 0.8;
   @if $variant=='dark' {
-    $us_shadow_color: $jet;
+    $us_shadow_color: darken($dark_fill, 10%);
   }
 
   @if ($p == left) {
